@@ -1,0 +1,13 @@
+#!/bin/bash
+
+MY_FQDN=$( hostname -f )
+MGMT_SERVER=<%= @mgmt_server  %>
+
+if [ "x${MY_FQDN}" == "x${MGMT_SERVER}" ] ; then
+    cd /opt/ansible4puppet-gluster/conf && ansible-playbook site.yml
+    exit $?
+else
+    echo "Not a management server. Updates should be applied via ${MGMT_SERVER}."
+    exit 0
+fi
+
